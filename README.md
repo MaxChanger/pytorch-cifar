@@ -1,11 +1,5 @@
 # Pytorch CNN CIFAR-10分类
 
-<p align="right"><strong>计算机视觉中的深度学习——计算机学院-10011605-2016302446-孙家岱</strong></p>
-
-[TOC]
-
-
-
 ## 一、环境配置
 
 - Ubuntu 16.04
@@ -140,9 +134,11 @@
 
 2. **增加卷积核的个数（Feature Map通道个数增加），增加Dropout(0.5)随机失活**
 
-   |              Accuracy               |             L o s s             |
-   | :---------------------------------: | :-----------------------------: |
-   | ![](CIFAR10分类/DaiNetaccuracy.svg) | ![](CIFAR10分类/DaiNetloss.svg) |
+
+
+   <img src="CIFAR10分类/DaiNetaccuracy.svg" width="70%" aligen="center">
+
+   <img src="CIFAR10分类/DaiNetloss.svg" width="70%" aligen="center">
 
    > 紫红色为train_accuracy、train_loss	蓝绿色为test_accuracy、test_loss	epoch：200
 
@@ -150,9 +146,9 @@
 
 3. **增加了一层卷积，并且修改学习率，在上一个网络参数不变的情况下，将学习率由0.1调整为0.001**
 
-   |                Accuracy                 |               L o s s               |
-   | :-------------------------------------: | :---------------------------------: |
-   | ![](CIFAR10分类/DaiNetaccuracy0001.svg) | ![](CIFAR10分类/DaiNetloss0001.svg) |
+   <img src="CIFAR10分类/DaiNetaccuracy0001.svg" width="70%" aligen="center">
+
+   <img src="CIFAR10分类/DaiNetloss0001.svg" width="70%" aligen="center">
 
    > 紫红色为*train_accuracy*、*train_loss*	蓝绿色为*test_accuracy*、*test_loss*	*epoch*：200
    >
@@ -205,13 +201,15 @@
            self.fc3 = nn.Linear(84, 10)
    ```
 
-   这个时候，就出现了一个问题，*BatchNorm2d、ReLU、Dropout、MaxPool2d*等层的顺序及是否添加*Dropout*，添加*Dropout*后失活的概率设置为多少合适$0.1$ or $0.5$
+   这个时候，就出现了一个问题，*BatchNorm2d、ReLU、Dropout、MaxPool2d*等层的顺序及是否添加*Dropout*，添加*Dropout*后失活的概率设置为多少合适*0.1* or *0.5*
 
-   |                   Accuracy                   |                 L o s s                  |
-   | :------------------------------------------: | :--------------------------------------: |
-   | ![](CIFAR10分类/Dainet1_before_accuracy.svg) | ![](CIFAR10分类/Dainet1_before_loss.svg) |
-   |                 **Accuracy**                 |               **L o s s**                |
-   |    ![](CIFAR10分类/Dainet1_accuracy.svg)     |    ![](CIFAR10分类/Dainet1_loss.svg)     |
+<img src="CIFAR10分类/Dainet1_before_accuracy.svg" width="70%" aligen="center">
+
+<img src="CIFAR10分类/Dainet1_before_loss.svg" width="70%" aligen="center">
+
+<img src="CIFAR10分类/Dainet1_accuracy.svg" width="70%" aligen="center">
+
+<img src="CIFAR10分类/Dainet1_loss.svg" width="70%" aligen="center">
 
    > 上边两张图应该是每个*Sequential*都设置*Dropout*时的曲线，蓝色为*train*，紫色为*test*		epoch:200
    >
@@ -236,7 +234,7 @@
 
    > SGD 是最普通的优化器, 也可以说没有加速效果, 而 Momentum 是 SGD 的改良版, 它加入了动量原则. 后面的 RMSprop 又是 Momentum 的升级版. 而 Adam 又是 RMSprop 的升级版. 不过从下面结果中我们看到, Adam 的效果似乎比 RMSprop 要差一点. 所以说并不是越先进的优化器, 结果越佳. 在试验中可以尝试不同的优化器, 找到那个最适合数据/网络的优化器
 
-   <img src="CIFAR10分类/9.jpg" width="40%">
+   <img src="CIFAR10分类/9.jpg" width="40%" aligen="center">
 
 7. **是否添加softmax层**
 
@@ -254,23 +252,23 @@
 
    一般来说，在合理的范围之内，越大的 *batch size* 使下降方向越准确，震荡越小；*batch size* 如果过大，则可能会出现局部最优的情况。小的 *bath size* 引入的随机性更大，难以达到收敛，极少数情况下可能会效果变好。
 
-   |                 Accuracy                  |                L o s s                |
-   | :---------------------------------------: | :-----------------------------------: |
-   | ![](CIFAR10分类/Dainet7_dif_accuracy.svg) | ![](CIFAR10分类/Dainet7_dif_loss.svg) |
+   <img src="CIFAR10分类/Dainet7_dif_accuracy.svg" width="70%" aligen="center">
+
+   <img src="CIFAR10分类/Dainet7_dif_loss.svg" width="70%" aligen="center">
 
    如上图，对于DaiNet7，分别使用` batch_size=128`和` batch_size=1024`，其他参数保持不变，粉色和绿色（长的）分别为` batch_size=1024`时的*train*和*test*，深红色和青蓝色（短的）分别为` batch_size=128`时的*train*和*test*。
 
    当*batch_size*变大之后，*train_loss*变小了，但是*test_loss*变大了；*train_accuracy*变大了，但是*test_accuracy*变小了，即两个的*Generlization Gap*变大了。
 
-   <img src="CIFAR10分类/8.png" width="50%">
+   <img src="CIFAR10分类/8.png" width="50%" aligen="center">
 
 10. **激活函数 Sigmoid,Tanh,ReLu,softplus,softmax**
 
     因为上课老师讲到过*ReLU*会出现下图的这种情况，所以想到了换激活函数,  有一个*Softplus*函数，公式如下：$f(x) = log(1+e^x)$，如右图所示， 但是更换之后效果不是很明显，且增加了计算量，所以又换回了*ReLU*。
 
-    |                               |                                                |
-    | ----------------------------- | ---------------------------------------------- |
-    | <img src="CIFAR10分类/4.png"> | <img src="CIFAR10分类/softplus_functions.png"> |
+    <img src="CIFAR10分类/4.png" width="50%" aligen="center">
+
+    <img src="CIFAR10分类/softplus_functions.png" width="50%" aligen="center">
 
 11. **动态调整学习率Learning Rate**
 
@@ -333,9 +331,10 @@
 ### 与ResNet50结果对比
 
 - *ResNet50*在我的一些参数下，结果如下图
-|               Accuracy               |             L o s  s           |
-|:----------------------------------: | :------------------------------:|
-| ![](CIFAR10分类/resnet_accuracy.svg) | ![](CIFAR10分类/resnet_loss.svg)|
+
+<img src="CIFAR10分类/resnet_accuracy.svg" width="70%" aligen="center">
+
+<img src="CIFAR10分类/resnet_loss.svg" width="70%" aligen="center">
 
 上图中，灰色的为*train*，橙色的为*test*，不得不说Resnet是真的强大，对于训练数据的拟合，*train_accuracy*可以达到<font color=red>**99.94%**</font>，*test_accuracy*可以达到<font color=red>**92.50%**</font>，不过这个结果并没有完全展示RestNet的实力，在网站看到有的博客可以使用ResNet达到95.5%左右的正确率，所以除了网络的结构，一些其他的参数对于结果也是比较重要的，比如学习率，图像增广等或者一些其他的Track。
 
@@ -344,9 +343,10 @@
 <center>ResNet50模型训练过程</center>
 
 - *ResNet50*和我的网络*Dainet7*对比图所示
-|               Accuracy               |             L o s  s           |
-|:----------------------------------: | :------------------------------:|
-| ![](CIFAR10分类/duibi_accuracy.svg) | ![](CIFAR10分类/duibi_loss.svg)|
+
+<img src="CIFAR10分类/duibi_accuracy.svg" width="70%" aligen="center">
+
+<img src="CIFAR10分类/duibi_loss.svg" width="70%" aligen="center">
 
 如上图所示，灰色和橙色分别为*ResNet50*的*train*和*test*，紫红色和绿色分别为*DaiNet7*的*train*和*test*，在*train_accuracy*方面两个有较大的差距，大概能差7个百分点左右，但是两者在**test_accuracy**方面相差不大，大概0.5个百分点左右，但是在训练速度方面，*DaiNet7*要比*ResNet*更占优势，在使用*GTX 1080Ti*显卡时，DaiNet7一个epoch平均大概需要23s左右，ResNet50则需要73s左右，两者的差距还是挺明显的。
 
@@ -489,9 +489,9 @@ with SummaryWriter(comment='LinearInLinear') as w:
 
   如下图，没找到问题的原因，不过后来直接换网络了，也就没这个问题了
 
-|              Accuracy               |             L o s s             |
-| :---------------------------------: | :-----------------------------: |
-| ![](CIFAR10分类/error_accuracy.svg) | ![](CIFAR10分类/error_loss.svg) |
+<img src="CIFAR10分类/error_accuracy.svg" width="70%" aligen="center">
+
+<img src="CIFAR10分类/error_loss.svg" width="70%" aligen="center">
 
 ![](CIFAR10分类/big_small.png)
 
